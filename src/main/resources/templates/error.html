@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>小雷妙妙屋</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="icon" href="/img/闪电.png" type="image/x-icon"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="nvaigation :: nav"></div>
+<div class="jumbotron">
+    <h1>(○´･д･)ﾉ出错啦！</h1>
+    <br>
+    <p th:if="${message != null}" th:text="${message}">服务器发烧啦，等下再来吧</p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">先回主页看看吧</a></p>
+</div>
+<div th:insert="footer :: foot"></div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'小雷妙妙屋-'+${sectionName}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="icon" href="/img/闪电.png" type="image/x-icon"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="nvaigation :: nav"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2> <span th:text="${sectionName}"></span> </h2>
+            <hr>
+
+            <div th:if="${section == 'questions'}">
+                <div class="media" th:each=" question : ${questions}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded "
+                                 th:src="${question.user.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a></h4>
+                        <span th:text="${question.description}"></span><br>
+                        <span class="text-desc">• <span th:text="${question.commentCount}"></span>个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • 发布于<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></span></span>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a th:href="@{'/profile/questions/?page='+1+'&size=5'}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li th:if="${pageForNow != 1}">
+                            <a th:href="@{'/profile/questions/?page='+${pageForNow - 1}+'&size=5'}" aria-label="Previous">
+                                <span aria-hidden="true">&#139;</span>
+                            </a>
+                        </li>
+
+                        <li th:if="( (${pageForNow +p} >= 1) and (${pageForNow +p} <= ${pageCount}) )" th:each="p : ${#numbers.sequence(-2,2)}" th:class="${p eq 0}? 'active':''">
+                            <a th:text="${pageForNow +p}" th:href="@{'/profile/questions/?page='+${pageForNow +p}+'&size=5'}"></a>
+                        </li>
+
+                        <li th:if="${pageForNow != pageCount}">
+                            <a th:href="@{'/profile/questions/?page='+${pageForNow + 1}+'&size=5'}" aria-label="Previous">
+                                <span aria-hidden="true">&#155;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{'/profile/questions/?page='+${pageCount}+'&size=5'}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div th:if="${section == 'replies'}">
+                <div class="panel panel-success">
+                    <div class="panel-heading">有人回复你啦</div>
+                    <div class="panel-body">
+                        <p>常回家看看呀，回家看看</p>
+                        <p>如果有人发布不当言论，记得告诉管理员哦</p>
+                        <p>( •̀ ω •́ )✧</p>
+                    </div>
+
+                    <ul class="list-group">
+                        <div th:each="notice : ${notifications}">
+                            <li class="list-group-item">
+                                <span th:text="${notice.notifier.getName()}"></span>
+                                <span th:text="${notice.type}"></span>
+                                <a th:href="@{'/notification/'+${notice.getId()}}">
+                                    <span th:text="${notice.outerTile}"></span>
+                                </a>
+                                <span th:if="${notice.status eq 0}" class="text-danger">未读</span>
+                                <span class="comments-time" th:text="${#dates.format(notice.gmtCreate,'YYYY-MM-DD HH:mm:ss')}"></span>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+                <div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a th:href="@{'/profile/replies/?page='+1+'&size=5'}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+
+                            <li th:if="${pageForNow != 1}">
+                                <a th:href="@{'/profile/replies/?page='+${pageForNow - 1}+'&size=5'}" aria-label="Previous">
+                                    <span aria-hidden="true">&#139;</span>
+                                </a>
+                            </li>
+
+                            <li th:if="( (${pageForNow +p} >= 1) and (${pageForNow +p} <= ${pageCount}) )" th:each="p : ${#numbers.sequence(-2,2)}" th:class="${p eq 0}? 'active':''">
+                                <a th:text="${pageForNow +p}" th:href="@{'/profile/replies/?page='+${pageForNow +p}+'&size=5'}"></a>
+                            </li>
+
+                            <li th:if="${pageForNow != pageCount}">
+                                <a th:href="@{'/profile/replies/?page='+${pageForNow + 1}+'&size=5'}" aria-label="Previous">
+                                    <span aria-hidden="true">&#155;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/profile/replies/?page='+${pageCount}+'&size=5'}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+<!--                    <nav aria-label="Page navigation">-->
+<!--                        <ul class="pagination">-->
+<!--                            <li>-->
+<!--                                <a href="#" aria-label="Previous">-->
+<!--                                    <span aria-hidden="true">&laquo;</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+
+<!--                            <li th:each="p:${pageCountList}">-->
+<!--                                <a th:text="${p}" th:href="@{'/profile/replies/?page='+${p}+'&size=10'}"></a>-->
+<!--                            </li>-->
+
+<!--                            <li>-->
+<!--                                <a href="#" aria-label="Next">-->
+<!--                                    <span aria-hidden="true">&raquo;</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </nav>-->
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div style="margin: 10px">
+                <a href="/profile/questions" th:class="${section=='questions'}? 'active list-group-item': 'list-group-item'">我的问题</a>
+                <a href="/profile/replies" th:class="${section=='replies'}? 'active list-group-item': 'list-group-item'">最新回复 <span class="badge"><span th:text="${session.notificationCount}">0</span></span></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:insert="footer :: foot"></div>
+
+</body>
+</html>

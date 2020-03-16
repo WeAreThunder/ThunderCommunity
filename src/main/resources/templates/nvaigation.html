@@ -1,0 +1,64 @@
+<!--这是网站的脑袋-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/css/community.css"/>
+</head>
+<body>
+<div th:fragment="nav">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"><img src="/img/闪电.png" alt="小雷妙妙屋"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    小雷妙妙屋
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" action="/">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="你想看点什么好康的">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/publish">我要提问</a>
+                    </li>
+                    <li>
+                        <a href="/profile/replies">
+                            <span class="badge">
+                                <span class="glyphicon glyphicon-bell"></span>
+                                <span th:if="${session.notificationCount != 0}" th:text="${session.notificationCount}"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <li th:if="${session.user!=null}">
+                        <img class="img-rounded img-onTop" th:src="${session.user.avatarUrl}">
+                    </li>
+                    <!--                如果session中的user不为空，那么显示“我”-->
+                    <li class="dropdown" th:if="${session.user!=null}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${session.user.getName()}"></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile/questions">我的问题</a></li>
+                            <li><a href="/profile/replies">最新回复</a></li>
+                            <li><a href="/logout">退出登录</a></li>
+                        </ul>
+                    </li>
+                    <!--                当session中的user为空时，显示登录键-->
+                    <li th:if="${session.user==null}">
+                        <a href="https://github.com/login/oauth/authorize?client_id=3598b3980ea7d89ae37e&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>

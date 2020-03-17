@@ -135,7 +135,8 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-warning">
+<!--            相关问题-->
+            <div th:if="${!questionsByTag.isEmpty()}" class="panel panel-warning">
                 <div class="panel-heading"><h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;相关问题</h4></div>
                 <div class="panel-body">
                     <ul class="list-group">

@@ -1,6 +1,7 @@
 package love.thunder.community.demo.controller;
 
 import com.github.pagehelper.PageHelper;
+import love.thunder.community.demo.cache.HotTagCache;
 import love.thunder.community.demo.dto.QuestionDTO;
 import love.thunder.community.demo.mapper.QuestionMapper;
 import love.thunder.community.demo.mapper.UserMapper;
@@ -23,13 +24,10 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
     private QuestionService questionService;
 
     @Autowired
-    private NotificationService notificationService;
+    private HotTagCache hotTagCache;
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
@@ -38,6 +36,8 @@ public class IndexController {
                         @RequestParam(name = "size",defaultValue="5")Integer size,
                         @RequestParam(name = "search",defaultValue = "*") String search
                         ){
+        //热门标签
+        List<String> hotTags = hotTagCache.getHots();
 
         //pagehelper的用法，现在不太会，以后好好学
         //得到总问题数，并计算页数
@@ -60,6 +60,7 @@ public class IndexController {
         //向前端传输问题列表
         model.addAttribute("questions",questionList);
 
+        model.addAttribute("hotTags",hotTags);
 
 
         return "index";

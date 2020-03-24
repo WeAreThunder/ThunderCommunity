@@ -71,11 +71,26 @@
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-primary" style="margin: 10px">
                 <div class="panel-heading">
-                    <h3 class="panel-title">热门话题</h3>
+                    <h3 class="panel-title">(。・∀・)ノ 你好呀</h3>
                 </div>
                 <div class="panel-body">
                     <p>· 哇哦，欢迎来到我的妙妙屋</p>
                     <p>· 你快猜猜看今天大家都讨论什么</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-primary" style="margin: 10px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">热门话题</h3>
+                </div>
+                <div class="panel-body">
+                    <div th:each="tag : ${hotTags}">
+                        <span class="label label-info question-tag">
+                            <span class="glyphicon glyphicon-tag"></span>
+                            <span th:text="${tag}"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
